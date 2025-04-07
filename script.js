@@ -33,12 +33,18 @@ const BREEDS = ["affenpinscher", "african", "airedale", "akita", "appenzeller", 
 
     //TO DO 1
     //Given an array of possible answer, a correct answer value, and a number of choices to get
-    //return a list of that many choices,including a correct answer others feom the array
+    //return a list of that many choices,including a correct answer and others from the array
         function getMultipleChoices(n, correctAnswer, array){
-            //use  a while loop ad getRandomElement() function
+            //use  a while loop and getRandomElement() function
             //make sure there no duplicates in the array
-
-
+            const choices =[correctAnswer];
+            while(choices.length < n){
+                let candidate =getRandomElement(array);
+                if(choices.indexOf(candidate) < 0){
+                    choices.push(candidate);
+                }
+            }
+            return shuffleArray(choices);
         }
 
 
@@ -47,9 +53,11 @@ const BREEDS = ["affenpinscher", "african", "airedale", "akita", "appenzeller", 
     //return the breed name string as formatted in the breed list, eg. "standerd-poodle"
      function getBreedFromUrl(url){
          //the string methode .split(char)  may come in handy
-         ///try to use destructuring as much as you can
-
-
+         //try to use destructuring as much as you can
+          let unsplitedBreed =url.split("/");
+          let [breed, subreed] = unsplitedBreed[4].split("-");
+          let FinalbreedName = [subreed, breed].join(" ");
+          return FinalbreedName.trim();
      }
 
 
@@ -59,7 +67,9 @@ const BREEDS = ["affenpinscher", "african", "airedale", "akita", "appenzeller", 
     //then parse the response as a JSON object ,
     // finally return the "massage " property of its body
     async function fetchMessage(url) {
-        
+        const response = await fetch(url);
+        const {message} = await response.json();
+        return message;
     }
 
     
@@ -84,10 +94,17 @@ const BREEDS = ["affenpinscher", "african", "airedale", "akita", "appenzeller", 
 
         //TO DO 4
         //for each of the choices in choicesArray,
-        //create a button element whose name, value, nad textContent properties are the value of that choice,
+        //create a button element whose name, value, and textContent properties are the value of that choice,
         //attach a "click" event listener with buttonHandler function,
         //and append the button as a child of thr options element
-
+        for(let choice of choicesArray){
+            const button =document.createElement("button");
+            button.textContent =choice;
+            button.value =choice;
+            button.name= choice;
+            button.addEventListener("click", buttonHandler);
+            options.appendChild(button);
+        }
 
 
     }
@@ -119,3 +136,5 @@ const BREEDS = ["affenpinscher", "african", "airedale", "akita", "appenzeller", 
     //TO DO 5
     //Asynchronous call the loadQuizData() function,
     //then call renderQuiz() with the returned imageUrl(), correctAnswer, and choices
+      const [imageUrl, correctAnswer, choices] = await loadQuizData();
+      renderQuiz(imageUrl, correctAnswer, choices);

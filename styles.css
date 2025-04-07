@@ -13,16 +13,22 @@ body {
 }
 
  .container1 {
-    background:#DEEFE7;
-    max-width: 70%;
+    /* background:#DEEFE7; */
+    max-width: 50%;
     margin: 0px auto;
     display: flex;
     flex-direction: column;
   }  
+ .container2{
+    background:#DEEFE7;
+
+ }
+
 
 img {
-    max-width: 100%;
-}
+     max-width: 400px;
+    max-height: 400px;
+} 
 
 #image-frame {
     font-size: x-large;
@@ -45,7 +51,7 @@ img {
 button {
     padding: 0.5rem;
     font-size: medium;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 .correct {
@@ -57,5 +63,5 @@ button {
 }
 
 .hidden {
-    display: none;
+    display:none;
 }
